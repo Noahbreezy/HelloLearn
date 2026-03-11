@@ -13,6 +13,7 @@ public class CalculatorOperations {
                 }
                 yield a / b;
             }
+            case null -> null;
             default -> null;
         };
     }

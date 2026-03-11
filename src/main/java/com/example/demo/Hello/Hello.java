@@ -16,12 +16,17 @@ public class Hello {
     public String countStringCharacters(String givenString) {
         int count = givenString.length();
         if (count >= 1) {
-            System.out.printf("\"%s\" has %d characters.", givenString, count);
-            return givenString + " " + "has " + count + " characters";
+            System.out.printf("\n\"%s\" has %d characters.", givenString, count);
+            return givenString + " " + "has " + count + " characters.";
 
         } else  {
             System.out.println("No string was given.");
             return "No string was given.";
         }
     }
+//
+//    @GetMapping("/error")
+//    public String error() {
+//        return "Oops, something went wrong with the calculator";
+//    }
 }

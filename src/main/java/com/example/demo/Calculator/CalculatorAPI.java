@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Objects;
+
 import static com.example.demo.Calculator.CalculatorOperations.calculate;
 
 @RestController
@@ -18,7 +20,7 @@ public class CalculatorAPI {
 
     @GetMapping("/add")
     public String add(@RequestParam Double a, @RequestParam Double b) {
-        return calculate(a, b, "add").toString();
+        return Objects.requireNonNull(calculate(a, b, "add")).toString();
     }
 
     @GetMapping("/subtract")
@@ -40,8 +42,8 @@ public class CalculatorAPI {
         return result;
     }
 
-    @GetMapping("/error")
-    public String error() {
-        return "Oops, something went wrong with the calculator";
-    }
+//    @GetMapping("/error")
+//    public String error() {
+//        return "Oops, something went wrong with the calculator";
+//    }
 }

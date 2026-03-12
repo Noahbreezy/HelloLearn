@@ -1,8 +1,20 @@
 package com.example.demo.Calculator;
 
-public class CalculatorOperations {
+import org.springframework.stereotype.Service;
 
-    public static Double calculate(Double a, Double b, String operation) {
+@Service
+public class CalculatorOperationsSimple implements CalculatorService{
+
+    @Override
+    public Double calculate(String operation, double... numbers) {
+
+        if (numbers.length != 2) {
+            throw new IllegalArgumentException("Simple calculator only supports exactly 2 numbers");
+        }
+
+        double a = numbers[0];
+        double b = numbers[1];
+
         return switch (operation) {
             case "add" -> a + b;
             case "subtract" -> a - b;

@@ -7,11 +7,25 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.junit.jupiter.params.provider.NullSource;
 
-import static com.example.demo.Calculator.CalculatorOperations.calculate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-
+@SpringBootTest
 public class CalculatorOperationsTest {
+
+    private final Calculator calculator;
+
+    @Autowired
+    public CalculatorOperationsTest(Calculator calculator) {
+        this.calculator = calculator;
+    }
+
+    private Double calculate(String operation, double[] numbers) {
+        return calculator.calculate(operation, numbers);
+    }
+
 
     @ParameterizedTest(name = "{0} -> {1} {0} {2} = {3} ")
     @CsvSource({
@@ -24,20 +38,21 @@ public class CalculatorOperationsTest {
     public void calculate_testCorrectResults(
             String operation, Double a, Double b, Double expected
     ) {
-        Double result = calculate(a, b, operation);
+        double[] numbers = {a, b};
+        Double result = calculate(operation, numbers);
         assertEquals(expected, result, "Calculated result");
     }
 
     @Test
     @DisplayName("Calculator should throw a divideByZero exception when dividing by zero.")
     public void calculate_testDivideByZero() {
-        assertThrows(ArithmeticException.class, () -> calculate(5.0, 0.0, "divide"));
+        assertThrows(ArithmeticException.class, () -> calculate("divide", new double[]{5.0, 0.0}));
     }
 
     @Test
     @DisplayName("Calculator should display \"Division by zero\"")
     public void calculate_testDivisionByZeroMessage() {
-        ArithmeticException e = assertThrows(ArithmeticException.class, () -> calculate(5.0, 0.0, "divide"));
+        ArithmeticException e = assertThrows(ArithmeticException.class, () -> calculate("divide", new double[]{5.0, 0.0}));
 
         assertEquals("Division by zero", e.getMessage());
     }
@@ -47,8 +62,10 @@ public class CalculatorOperationsTest {
     @NullSource
     @DisplayName("")
     public void calculate_testInvalidOperation(String operation) {
-        Double result = calculate(5.0, 0.0, operation);
+        Double result = calculate(operation, new double[]{5.0, 0.0});
 
         assertNull(result);
     }
+
+
 }

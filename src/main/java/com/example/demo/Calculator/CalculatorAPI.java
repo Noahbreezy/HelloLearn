@@ -7,43 +7,50 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Objects;
 
-import static com.example.demo.Calculator.CalculatorOperations.calculate;
 
 @RestController
 @RequestMapping("/calculator")
 public class CalculatorAPI {
 
+    private final Calculator calculator;
+
+    public CalculatorAPI(Calculator calculator) {
+        this.calculator = calculator;
+    }
+
+    private Double calculate(String operation, double... numbers) {
+        return calculator.calculate(operation, numbers);
+    }
+
     @GetMapping("/info")
     public String calculator() {
-        return "Hello you can use /add, /subtract, /multiply, /divide as simple calculator endpoints by providing 2 numbers.";
+        return "Hello you can use /add, /subtract, /multiply, /divide as simple calculator endpoints by providing 2 numbers. If you provide more numbers we will use the advanced calculator.";
     }
 
     @GetMapping("/add")
-    public String add(@RequestParam Double a, @RequestParam Double b) {
-        return Objects.requireNonNull(calculate(a, b, "add")).toString();
+    public String add(@RequestParam double[] numbers) {
+        return Objects.requireNonNull(calculate("add", numbers)).toString();
     }
 
     @GetMapping("/subtract")
-    public String subtract(@RequestParam Double a, @RequestParam Double b) {
-        return calculate(a, b, "subtract").toString();
+    public String subtract(@RequestParam double[] numbers) {
+        return Objects.requireNonNull(calculate("subtract", numbers)).toString();
     }
 
     @GetMapping("/multiply")
-    public String multiply(@RequestParam Double a, @RequestParam Double b) {
-        return calculate(a, b, "multiply").toString();
+    public String multiply(@RequestParam double[] numbers) {
+        return Objects.requireNonNull(calculate("multiply", numbers)).toString();
     }
 
     @GetMapping("/divide")
-    public String divide(@RequestParam Double a, @RequestParam Double b) {
-        String result = calculate(a, b, "divide").toString();
+    public String divide(@RequestParam double[] numbers) {
+        String result = Objects.requireNonNull(calculate("divide", numbers)).toString();
         if (result == null) {
             result = "invalid divide";
         }
         return result;
     }
 
-//    @GetMapping("/error")
-//    public String error() {
-//        return "Oops, something went wrong with the calculator";
-//    }
+
+
 }

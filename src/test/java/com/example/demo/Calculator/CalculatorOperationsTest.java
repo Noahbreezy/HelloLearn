@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 public class CalculatorOperationsTest {
@@ -60,12 +61,15 @@ public class CalculatorOperationsTest {
     @ParameterizedTest
     @ValueSource(strings = {"", "Noah", "ghjndbf", "root", "randomOperation", ""})
     @NullSource
-    @DisplayName("")
+    @DisplayName("testing invalid operations")
     public void calculate_testInvalidOperation(String operation) {
         Double result = calculate(operation, new double[]{5.0, 0.0});
 
         assertNull(result);
     }
 
-
+    @Test
+    @DisplayName("testing if advanced.calculate is used")
+    public void calculate_testAdvancedCalculateIsUsed() {
+    }
 }

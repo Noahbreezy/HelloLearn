@@ -61,8 +61,28 @@ public class CalculatorAPITest {
         Double result = calculator.calculate("add", numbers);
 
         verify(advanced).calculate("add", numbers);
-        verify(simple, never()).calculate("add", any(double[].class));
+        verify(simple, never()).calculate(eq("add"), any());
         assert result.equals(7.0); // better not used, not junit
         assertEquals(7.0, result);
+    }
+
+    @Test
+    @DisplayName("Make sure the simple.calculate version is called correctly")
+    public void testSimpleCalculate() {
+        CalculatorOperationsSimple simple = mock(CalculatorOperationsSimple.class);
+        CalculatorOperationsAdvanced advanced = mock(CalculatorOperationsAdvanced.class);
+
+        Calculator calculator = new Calculator(simple, advanced);
+
+        double[] numbers = new double[]{1.2, 2.8};
+
+        when(simple.calculate("add", numbers)).thenReturn(4.0);
+
+        Double result = calculator.calculate("add", numbers);
+
+        verify(simple).calculate("add", numbers);
+        verify(advanced, never()).calculate(anyString(), any(double[].class));
+
+        assertEquals(4.0, result);
     }
 }

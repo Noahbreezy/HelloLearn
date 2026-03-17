@@ -1,16 +1,19 @@
 package com.example.demo.Calculator;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class Calculator {
 
-    private final CalculatorOperationsSimple simple;
-    private final CalculatorOperationsAdvanced advanced;
+    private final CalculatorService simple;
+    private final CalculatorService advanced;
+    private final CalculatorService multiply;
 
-    public Calculator(CalculatorOperationsSimple simple, CalculatorOperationsAdvanced advanced) {
+    public Calculator(@Qualifier("calculatorOperationsSimple") CalculatorService simple, @Qualifier("calculatorOperationsAdvanced") CalculatorService advanced, @Qualifier("calculatorOperationsMultiply") CalculatorService multiply) {
         this.simple = simple;
         this.advanced = advanced;
+        this.multiply = multiply;
     }
 
     public Double calculate(String givenString, double... numbers) {
@@ -21,5 +24,9 @@ public class Calculator {
         } else  {
             throw new IllegalArgumentException();
         }
+    }
+    
+    public Double multiply6(String givenString, double... numbers) {
+        return multiply.calculate(givenString, numbers);
     }
 }

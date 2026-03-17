@@ -1,6 +1,7 @@
 
 package com.example.demo.Calculator;
 
+import com.example.demo.Hello.CalculatorOperationsMultiply;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -49,10 +50,11 @@ public class CalculatorAPITest {
     @DisplayName("Make sure avdanced.calculate is called.")
     public void testCalculate() {
 
-        CalculatorOperationsSimple simple = mock(CalculatorOperationsSimple.class);
-        CalculatorOperationsAdvanced advanced = mock(CalculatorOperationsAdvanced.class);
+        CalculatorService simple = mock(CalculatorService.class);
+        CalculatorService advanced = mock(CalculatorService.class);
+        CalculatorService multiply = mock(CalculatorService.class);
 
-        Calculator calculator = new Calculator(simple, advanced);
+        Calculator calculator = new Calculator(simple, advanced, multiply);
 
         double[] numbers = new double[]{1.2, 2.8, 3.0};
 
@@ -69,10 +71,11 @@ public class CalculatorAPITest {
     @Test
     @DisplayName("Make sure the simple.calculate version is called correctly")
     public void testSimpleCalculate() {
-        CalculatorOperationsSimple simple = mock(CalculatorOperationsSimple.class);
-        CalculatorOperationsAdvanced advanced = mock(CalculatorOperationsAdvanced.class);
+        CalculatorService simple = mock(CalculatorService.class);
+        CalculatorService advanced = mock(CalculatorService.class);
+        CalculatorService multiply = mock(CalculatorService.class);
 
-        Calculator calculator = new Calculator(simple, advanced);
+        Calculator calculator = new Calculator(simple, advanced, multiply);
 
         double[] numbers = new double[]{1.2, 2.8};
 

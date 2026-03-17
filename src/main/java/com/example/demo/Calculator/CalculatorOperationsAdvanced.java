@@ -1,5 +1,7 @@
 package com.example.demo.Calculator;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 @Service
